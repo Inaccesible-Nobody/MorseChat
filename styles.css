@@ -119,4 +119,23 @@
 @media(max-width:650px){.sidebar .chat-nav-item{margin-top:0;padding-top:7px;border-top:2px solid transparent}.sidebar .chat-nav-item.active{border-top-color:var(--green)}}
 
 button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.chat-composer-preview:focus-visible{outline:2px solid #b5f36b;outline-offset:2px}
+.mobile-morse-controls{display:none}
+.chart[hidden]{display:none}
+@media(max-width:650px){
+  .keypad{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .keypad .key-dit,.keypad .key-dah{width:clamp(64px,18vw,84px);height:clamp(64px,18vw,84px);min-height:0;padding:8px;border-radius:50%;align-items:center;justify-content:center;text-align:center;justify-self:center;gap:3px}
+  .keypad .key-dit kbd,.keypad .key-dah kbd,.keypad .key-dit small,.keypad .key-dah small{display:none}
+  .keypad .key-dit strong,.keypad .key-dah strong{font:9px var(--mono)}
+  .keypad .key-dit strong span,.keypad .key-dah strong span{display:block;font-size:19px;margin:2px 0 0}
+  .keypad .key-space,.keypad .key-delete,.keypad .key-clear,.keypad .key-submit{grid-column:auto;min-height:48px;justify-content:center;align-items:center;text-align:center;padding:8px 4px;gap:3px}
+  .keypad .key-space kbd,.keypad .key-delete kbd,.keypad .key-clear kbd,.keypad .key-space small,.keypad .key-delete small,.keypad .key-clear small{display:none}
+  .keypad .key-space strong,.keypad .key-delete strong,.keypad .key-clear strong,.keypad .key-submit strong{font-size:9px}
+  .settings-panel .timing-note{display:none}
+  .feedback:not(.good):not(.bad){display:none}
+  .mobile-morse-controls{display:block}
+  .mobile-morse-controls .chat-action-keys{margin-bottom:0}
+  .mobile-morse-controls #translator-enter-button{background:var(--green);border-color:var(--green);color:#11170e}
+  .mobile-morse-hint{display:block;margin-top:9px;text-align:center;color:var(--muted);font:10px var(--sans)}
+  #translator-morse-mode .translator-controls #clear-morse-translator,.translator-hint{display:none}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

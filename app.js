@@ -198,7 +198,7 @@
   $('toggle-decoded').addEventListener('click',()=>{decodedVisible=!decodedVisible;$('toggle-decoded').textContent=decodedVisible?'HIDE':'SHOW';renderSignal();});
   $('toggle-incoming-morse').addEventListener('click',()=>{incomingMorseVisible=!incomingMorseVisible;renderReceiveInputMode();});
   $('audio-toggle').addEventListener('click',e=>{audioOn=!audioOn;e.target.classList.toggle('on',audioOn);e.target.textContent=audioOn?'ON':'OFF';});
-  $('chart-toggle').addEventListener('click',e=>{chartVisible=!chartVisible;e.target.textContent=chartVisible?'HIDE':'SHOW';e.target.classList.toggle('on',chartVisible);renderChart();});
+  $('chart-toggle').addEventListener('click',e=>{chartVisible=!chartVisible;e.target.textContent=chartVisible?'HIDE':'SHOW';e.target.classList.toggle('on',chartVisible);e.target.setAttribute('aria-pressed',String(chartVisible));renderChart();});
   $('plain-input').addEventListener('input',()=>{const text=$('plain-input').value.toUpperCase();$('morse-translation').textContent=[...text].map(c=>c===' '?' / ':MORSE[c]||'').join(' ').trim()||'—';});
   document.querySelectorAll('.translator-mode').forEach(b=>b.addEventListener('click',()=>{
     const textMode=b.dataset.translatorMode==='text';
@@ -221,6 +221,10 @@
     const committed=translatorTokens.map(token=>token==='/'?'/':token).join(' ');
     $('morse-input').value=[committed,translatorElements].filter(Boolean).join(' ')||'-';
     $('decoded-translation').textContent=translatorDecoded||'-';
+    const hasInput=Boolean(translatorElements||translatorTokens.length);
+    $('translator-backspace-button').disabled=!hasInput;
+    $('translator-clear-button').disabled=!hasInput;
+    $('translator-enter-button').disabled=!translatorElements;
   }
   function commitTranslatorLetter(){
     if(!translatorElements)return;
@@ -257,6 +261,11 @@
     else if(translatorTokens.length){if(translatorTokens[translatorTokens.length-1]==='/')translatorTokens.pop();translatorTokens.pop();translatorDecoded=translatorTokens.map(token=>token==='/'?' ':REVERSE[token]||'?').join('').replace(/\s+/g,' ');}
     renderTranslatorMorse();
   }
+  $('translator-dit-button').addEventListener('click',()=>addTranslatorElement('.'));
+  $('translator-dah-button').addEventListener('click',()=>addTranslatorElement('-'));
+  $('translator-backspace-button').addEventListener('click',undoTranslatorInput);
+  $('translator-clear-button').addEventListener('click',clearTranslatorInput);
+  $('translator-enter-button').addEventListener('click',commitTranslatorInput);
   $('morse-input').addEventListener('keydown',e=>{
     if(e.repeat)return;
     const key=e.key.toLowerCase();
@@ -440,6 +449,6 @@
   }));
   $('chat-composer-preview').addEventListener('click',e=>e.currentTarget.focus());
   $('chat-composer-preview').tabIndex=0;
-  initializeMorseChat();
+  renderTranslatorMorse();initializeMorseChat();
   renderChart();renderDictionary();renderProgress();renderSignal();$('target-phrase').textContent=currentTarget;
 })();

@@ -17,6 +17,7 @@ Open `index.html` in a browser, or use VS Code with the Live Server extension.
 - Send and Receive practice modes, including unlimited receive-audio replay
 - Synthesized CW audio
 - Adjustable WPM and word-gap threshold
+- Mobile touch controls for Morse input in Practice and Morse-to-Text translation
 - Morse reference chart
 - Translator with audio playback
 - Default, Community and My Dictionary tabs

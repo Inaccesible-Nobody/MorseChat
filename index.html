@@ -82,6 +82,7 @@
           <div id="translator-morse-mode" hidden>
             <div class="translator-controls"><label class="field-label" for="morse-input">MORSE INPUT</label><button class="text-button" id="clear-morse-translator">CLEAR</button></div>
             <textarea id="morse-input" rows="3" readonly placeholder="Press J for dit or K for dah..." aria-label="Morse input sequence"></textarea>
+            <div class="mobile-morse-controls"><div class="chat-morse-keys"><button type="button" class="chat-morse-key" id="translator-dit-button" aria-label="Enter dot, dit"><strong>·</strong><span>DIT</span></button><button type="button" class="chat-morse-key" id="translator-dah-button" aria-label="Enter dash, dah"><strong>−</strong><span>DAH</span></button></div><div class="chat-action-keys"><button type="button" id="translator-backspace-button" disabled>BACKSPACE</button><button type="button" id="translator-clear-button" disabled>CLEAR</button><button type="button" id="translator-enter-button" aria-label="Commit current Morse letter" disabled>ENTER</button></div><small class="mobile-morse-hint">Pause to separate words.</small></div>
             <p class="translator-hint"><kbd>J</kbd> = DIT (.) / <kbd>K</kbd> = DAH (-) / <kbd>SPACE</kbd> = COMMIT LETTER / <kbd>I</kbd> = CLEAR / <kbd>BACKSPACE</kbd> = UNDO. Pause 7 units to separate words.</p>
             <div class="translator-controls"><span class="field-label">DECODED TEXT</span></div>
             <div class="translation-output decoded-translation" id="decoded-translation">-</div>
