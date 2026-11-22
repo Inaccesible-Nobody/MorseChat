@@ -45,3 +45,14 @@ Morse Chat uses Supabase Auth, Postgres and Realtime. The chat screen is in plac
 Chat messages are stored as Morse only. Each user's incoming display preference (text or Morse) is stored in that user's chat settings. Supabase Auth persists and refreshes browser sessions, so users remain signed in until they sign out or their session expires.
 
 The schema also enables Supabase Cron and schedules a database deletion every minute for Morse messages older than 24 hours. Rerun the updated schema after code changes so the room rename RPC and retention job are installed; the rooms themselves are retained.
+
+
+## UI refinement pass
+
+This revision keeps the existing HTML/CSS/JS structure and Supabase integration while simplifying the interface:
+- Moved the navigation collapse control into the global top bar.
+- Removed repeated module labels, numbered navigation markers, the live clock and build metadata.
+- Simplified page descriptions and panel headings.
+- Removed the duplicate target-visibility control; use the control beside the target phrase.
+- Added subtle pressed feedback for the Morse keys and visible keyboard focus states.
+- Kept the mobile bottom navigation and existing practice, translator, dictionary, progress and chat flows.

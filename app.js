@@ -169,6 +169,21 @@
     else if(e.key.toLowerCase()==='i'){e.preventDefault();clearMessage();}
     else if(e.key==='Enter'){e.preventDefault();checkPhrase();}
   });
+
+  const keyButtonMap={j:'dit-key',k:'dah-key',' ':'commit-key',backspace:'backspace-key',i:'clear-key',enter:'submit-key'};
+  document.addEventListener('keydown',e=>{
+    const id=keyButtonMap[e.key.toLowerCase()] || keyButtonMap[e.key];
+    if(id){const button=$(id);if(button&&!button.hidden)button.classList.add('is-pressed');}
+  });
+  document.addEventListener('keyup',e=>{
+    const id=keyButtonMap[e.key.toLowerCase()] || keyButtonMap[e.key];
+    if(id){const button=$(id);if(button)button.classList.remove('is-pressed');}
+  });
+  document.querySelectorAll('.key').forEach(button=>{
+    button.addEventListener('pointerdown',()=>button.classList.add('is-pressed'));
+    ['pointerup','pointerleave','pointercancel'].forEach(type=>button.addEventListener(type,()=>button.classList.remove('is-pressed')));
+  });
+
   document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x===b));
     document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+b.dataset.view));
@@ -179,7 +194,6 @@
   $('receive-text-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();checkPhrase();}});
   $('wpm').addEventListener('input',e=>{$('wpm-value').textContent=e.target.value;});
   $('toggle-target').addEventListener('click',()=>{targetVisible=!targetVisible;$('target-phrase').style.visibility=targetVisible?'visible':'hidden';$('toggle-target').textContent=targetVisible?'HIDE TARGET':'SHOW TARGET';});
-  $('target-setting').addEventListener('click',e=>{targetVisible=!targetVisible;e.target.classList.toggle('on',targetVisible);e.target.textContent=targetVisible?'ON':'OFF';$('target-wrap').style.display=targetVisible&&mode==='send'?'block':'none';});
   $('toggle-decoded').addEventListener('click',()=>{decodedVisible=!decodedVisible;$('toggle-decoded').textContent=decodedVisible?'HIDE':'SHOW';renderSignal();});
   $('toggle-incoming-morse').addEventListener('click',()=>{incomingMorseVisible=!incomingMorseVisible;renderReceiveInputMode();});
   $('audio-toggle').addEventListener('click',e=>{audioOn=!audioOn;e.target.classList.toggle('on',audioOn);e.target.textContent=audioOn?'ON':'OFF';});
@@ -401,9 +415,12 @@
     activeChatRoom.room_name=name;chatRooms=chatRooms.map(room=>room.id===activeChatRoom.id?{...room,room_name:name}:room);
     $('chat-room-title').textContent=name;renderChatRooms();setChatStatus('Room name updated.');
   });
-  $('chat-sidebar-toggle').addEventListener('click',e=>{
+  const sidebarToggle=$('sidebar-toggle');
+  sidebarToggle.addEventListener('click',()=>{
     const collapsed=document.querySelector('.shell').classList.toggle('sidebar-collapsed');
-    e.currentTarget.textContent=collapsed?'SHOW NAV':'HIDE NAV';e.currentTarget.setAttribute('aria-pressed',String(collapsed));
+    sidebarToggle.setAttribute('aria-expanded',String(!collapsed));
+    sidebarToggle.setAttribute('aria-label',collapsed?'Expand navigation':'Collapse navigation');
+    sidebarToggle.title=collapsed?'Expand navigation':'Collapse navigation';
   });
   $('chat-copy-code').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('chat-invite-code').textContent);setChatStatus('Room code copied. Share it with your friends.');}catch{setChatStatus('Copy failed. Select and copy the room code.');}});
   $('chat-send-message').addEventListener('click',sendChatMessage);
@@ -415,6 +432,5 @@
   $('chat-composer-preview').addEventListener('click',e=>e.currentTarget.focus());
   $('chat-composer-preview').tabIndex=0;
   initializeMorseChat();
-  function tick(){$('clock').textContent=new Date().toLocaleTimeString('en-GB');}
-  tick();setInterval(tick,1000);renderChart();renderDictionary();renderProgress();renderSignal();$('target-phrase').textContent=currentTarget;
+  renderChart();renderDictionary();renderProgress();renderSignal();$('target-phrase').textContent=currentTarget;
 })();
