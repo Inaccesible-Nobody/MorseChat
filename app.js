@@ -295,7 +295,10 @@
   function renderChatComposer(){
     const parts=[...chatTokens,chatElements].filter(Boolean);
     $('chat-composer-preview').classList.toggle('is-empty',parts.length===0);
-    $('chat-composer-preview').textContent=parts.length?formatMorseForDisplay(parts.join(' ')):'Press J or K to enter Morse...';
+    $('chat-composer-preview').textContent=parts.length?formatMorseForDisplay(parts.join(' ')):'Tap DIT or DAH to enter Morse...';
+    $('chat-dit-button').disabled=!activeChatRoom;
+    $('chat-dah-button').disabled=!activeChatRoom;
+    $('chat-clear-button').disabled=parts.length===0;
     $('chat-send-message').disabled=!activeChatRoom||parts.length===0;
   }
   function decodeChatCharacter(){if(!chatElements)return;chatTokens.push(chatElements);chatElements='';renderChatComposer();}
@@ -423,6 +426,9 @@
     sidebarToggle.title=collapsed?'Expand navigation':'Collapse navigation';
   });
   $('chat-copy-code').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('chat-invite-code').textContent);setChatStatus('Room code copied. Share it with your friends.');}catch{setChatStatus('Copy failed. Select and copy the room code.');}});
+  $('chat-dit-button').addEventListener('click',()=>addChatElement('.'));
+  $('chat-dah-button').addEventListener('click',()=>addChatElement('-'));
+  $('chat-clear-button').addEventListener('click',clearChatComposer);
   $('chat-send-message').addEventListener('click',sendChatMessage);
   document.querySelectorAll('.chat-display-option').forEach(button=>button.addEventListener('click',async()=>{
     chatDisplayMode=button.dataset.chatDisplay;document.querySelectorAll('.chat-display-option').forEach(item=>item.classList.toggle('active',item===button));

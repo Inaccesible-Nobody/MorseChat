@@ -123,7 +123,7 @@
             <section class="chat-conversation panel" aria-label="Room conversation">
               <div class="chat-conversation-head"><div><span class="micro-label" id="chat-room-members">SELECT A ROOM</span><h2 id="chat-room-title">Your Morse rooms</h2></div><div class="chat-header-actions"><button type="button" class="text-button" id="chat-rename-room" hidden>RENAME ROOM</button><div class="chat-invite" id="chat-invite" hidden><span class="micro-label">ROOM CODE</span><strong id="chat-invite-code"></strong><button type="button" class="text-button" id="chat-copy-code">COPY</button></div></div></div>
               <div id="chat-messages" class="chat-messages"><div class="empty-state">Create a room or join with an invite code to start chatting.</div></div>
-              <div class="chat-composer-wrap"><div class="chat-key-guide"><kbd>J</kbd> DIT (.) <kbd>K</kbd> DAH (-) <kbd>SPACE</kbd> COMMIT <kbd>I</kbd> CLEAR <kbd>BACKSPACE</kbd> UNDO</div><div id="chat-composer-preview" class="chat-composer-preview is-empty" aria-live="polite">Press J or K to enter Morse...</div><div class="chat-composer-actions"><div class="chat-compose-help"><span id="chat-composer-state">MORSE ONLY INPUT</span><small>Space commits a letter; pause 7 units to add a word space.</small></div><button class="primary-button" id="chat-send-message" type="button" disabled>SEND MORSE</button></div></div>
+              <div class="chat-composer-wrap"><div class="chat-key-guide"><kbd>J</kbd> DIT (.) <kbd>K</kbd> DAH (-) <kbd>SPACE</kbd> COMMIT <kbd>I</kbd> CLEAR <kbd>BACKSPACE</kbd> UNDO</div><div id="chat-composer-preview" class="chat-composer-preview is-empty" aria-live="polite">Tap DIT or DAH to enter Morse...</div><div class="chat-morse-keys"><button type="button" class="chat-morse-key" id="chat-dit-button" aria-label="Enter dot, dit" disabled><strong>·</strong><span>DIT</span></button><button type="button" class="chat-morse-key" id="chat-dah-button" aria-label="Enter dash, dah" disabled><strong>−</strong><span>DAH</span></button></div><div class="chat-action-keys"><button type="button" id="chat-clear-button" disabled>CLEAR</button><button class="primary-button" id="chat-send-message" type="button" disabled>ENTER</button></div><div class="chat-composer-actions"><div class="chat-compose-help"><span id="chat-composer-state">MORSE ONLY INPUT</span><small>Pause 7 units to add a word space.</small></div></div></div>
             </section>
           </div>
         </div>
@@ -133,7 +133,7 @@
         <div class="stats-grid"><div class="panel stat"><span class="micro-label">SESSIONS</span><strong id="stat-sessions">0</strong><small>Completed checks</small></div><div class="panel stat"><span class="micro-label">ACCURACY</span><strong id="stat-accuracy">—</strong><small>Send mode matches</small></div><div class="panel stat"><span class="micro-label">CHARACTERS</span><strong id="stat-characters">0</strong><small>Characters attempted</small></div></div>
         <div class="panel history-panel"><div class="panel-head">RECENT ACTIVITY <button class="text-button" id="clear-history">CLEAR HISTORY</button></div><div id="history-list" class="history-list"></div></div>
       </section>
-      <footer class="footer"><span>SIGNAL</span><span>MADE FOR PRACTICE</span></footer>
+      <footer class="footer"><span>SIGNAL</span></footer>
     </main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
