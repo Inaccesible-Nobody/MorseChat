@@ -23,6 +23,7 @@
   let audioContext=null;
   const unitMs = () => 1200 / Number($('wpm').value);
   const gapUnits = () => 7;
+  const chatGapUnits = () => 12;
   const phraseBank = () => [...DEFAULTS,...community,...mine];
 
   function beep(duration=unitMs()) {
@@ -299,6 +300,7 @@
     $('chat-dit-button').disabled=!activeChatRoom;
     $('chat-dah-button').disabled=!activeChatRoom;
     $('chat-clear-button').disabled=parts.length===0;
+    $('chat-backspace-button').disabled=parts.length===0;
     $('chat-send-message').disabled=!activeChatRoom||parts.length===0;
   }
   function decodeChatCharacter(){if(!chatElements)return;chatTokens.push(chatElements);chatElements='';renderChatComposer();}
@@ -306,13 +308,13 @@
     clearTimeout(chatAutoTimer);clearTimeout(chatWordTimer);beep(value==='.'?unitMs():unitMs()*3);
     chatElements+=value;renderChatComposer();
     chatAutoTimer=setTimeout(()=>{decodeChatCharacter();chatAutoTimer=null;},unitMs()*3);
-    chatWordTimer=setTimeout(()=>{if(chatElements)decodeChatCharacter();if(chatTokens.length&&chatTokens[chatTokens.length-1]!=='/')chatTokens.push('/');renderChatComposer();chatWordTimer=null;},unitMs()*7);
+    chatWordTimer=setTimeout(()=>{if(chatElements)decodeChatCharacter();if(chatTokens.length&&chatTokens[chatTokens.length-1]!=='/')chatTokens.push('/');renderChatComposer();chatWordTimer=null;},unitMs()*chatGapUnits());
   }
   function commitChatCharacter(){
     clearTimeout(chatAutoTimer);clearTimeout(chatWordTimer);chatAutoTimer=chatWordTimer=null;
     decodeChatCharacter();
     renderChatComposer();
-    chatWordTimer=setTimeout(()=>{if(chatTokens.length&&chatTokens[chatTokens.length-1]!=='/')chatTokens.push('/');renderChatComposer();chatWordTimer=null;},unitMs()*7);
+    chatWordTimer=setTimeout(()=>{if(chatTokens.length&&chatTokens[chatTokens.length-1]!=='/')chatTokens.push('/');renderChatComposer();chatWordTimer=null;},unitMs()*chatGapUnits());
   }
   function clearChatComposer(){clearTimeout(chatAutoTimer);clearTimeout(chatWordTimer);chatAutoTimer=chatWordTimer=null;chatElements='';chatTokens=[];renderChatComposer();}
   function undoChatComposer(){
@@ -428,6 +430,7 @@
   $('chat-copy-code').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('chat-invite-code').textContent);setChatStatus('Room code copied. Share it with your friends.');}catch{setChatStatus('Copy failed. Select and copy the room code.');}});
   $('chat-dit-button').addEventListener('click',()=>addChatElement('.'));
   $('chat-dah-button').addEventListener('click',()=>addChatElement('-'));
+  $('chat-backspace-button').addEventListener('click',undoChatComposer);
   $('chat-clear-button').addEventListener('click',clearChatComposer);
   $('chat-send-message').addEventListener('click',sendChatMessage);
   document.querySelectorAll('.chat-display-option').forEach(button=>button.addEventListener('click',async()=>{

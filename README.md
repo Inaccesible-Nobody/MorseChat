@@ -42,7 +42,7 @@ Morse Chat uses Supabase Auth, Postgres and Realtime. The chat screen is in plac
 3. Enable Google under Supabase Authentication providers. Add the Supabase callback URL shown on that provider settings page to the Google OAuth client's authorized redirect URIs.
 4. Add the app origin to Supabase Authentication URL Configuration and allowed redirect URLs. Run the app through a local web server (such as VS Code Live Server); OAuth does not work from `file://`.
 
-Chat messages are stored as Morse only. On mobile, use the circular DIT and DAH controls to enter Morse, then CLEAR or ENTER below them. Each user's incoming display preference (text or Morse) is stored in that user's chat settings. Supabase Auth persists and refreshes browser sessions, so users remain signed in until they sign out or their session expires.
+Chat messages are stored as Morse only. On mobile, use the circular DIT and DAH controls to enter Morse, then BACKSPACE, CLEAR, or ENTER below them. Chat input speed follows the Practice WPM setting, with a longer pause for word spaces. Each user's incoming display preference (text or Morse) is stored in that user's chat settings. Supabase Auth persists and refreshes browser sessions, so users remain signed in until they sign out or their session expires.
 
 The schema also enables Supabase Cron and schedules a database deletion every minute for Morse messages older than 24 hours. Rerun the updated schema after code changes so the room rename RPC and retention job are installed; the rooms themselves are retained.
 
